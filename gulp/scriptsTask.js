@@ -1,0 +1,12 @@
+"use strict";
+
+var gulp = require("gulp");
+var _ = require("lodash");
+var bundleScripts = require("./bundleScripts");
+
+
+var taskName = 'scripts';
+
+gulp.task(taskName, _.partial(bundleScripts, "curryOnTop.js", "./src", "./dist", false));
+
+module.exports = taskName;
