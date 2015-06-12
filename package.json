@@ -1,6 +1,6 @@
 {
   "name": "curryOnTop",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Helpers for functional programming with interfaces that relay on objects and methods",
   "main": "./src/curryOnTop.js",
   "browser": "./dist/curryOnTop.js",
