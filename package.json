@@ -1,7 +1,7 @@
 {
   "name": "curryOnTop",
   "version": "0.1.1",
-  "description": "Helpers for functional programming with interfaces that relay on objects and methods",
+  "description": "Makes functional programming and currying convenient when working with API’s that rely on objects and methods",
   "main": "./src/curryOnTop.js",
   "browser": "./dist/curryOnTop.js",
   "scripts": {
