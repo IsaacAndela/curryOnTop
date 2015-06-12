@@ -1,12 +1,13 @@
 {
-  "name": "ImmutableCurry",
+  "name": "curryOnTop",
   "version": "0.0.0",
-  "description": "Helpers for functional programming with Immutable.js",
-  "main": "ImmutableCurry.js",
+  "description": "Helpers for functional programming with interfaces that relay on objects and methods",
+  "main": "./src/curryOnTop.js",
+  "browser": "./dist/curryOnTop.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "gulp test"
   },
-  "author": "Isaac Andela",
+  "author": "Isaac Andela <mail@isaacandela.nl>",
   "license": "ISC",
   "devDependencies": {
     "gulp": "^3.8.10",
