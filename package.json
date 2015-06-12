@@ -5,8 +5,15 @@
   "main": "./src/curryOnTop.js",
   "browser": "./dist/curryOnTop.js",
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "build": "gulp scripts",
+    "start": "gulp watch"
   },
+  "bugs": {
+    "url": "https://github.com/IsaacAndela/curryOnTop/issues",
+    "email": "mail@isaacandela.nl"
+  },
+  "repository": "IsaacAndela/curryOnTop",
   "author": "Isaac Andela <mail@isaacandela.nl>",
   "license": "ISC",
   "devDependencies": {
