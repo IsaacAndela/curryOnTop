@@ -3,12 +3,12 @@
 var fn = require("./functional");
 var tuple = require("./tuple");
 
-var selectTuplesWithFunctions = tuple.select(tuple.isValueAFunction);
+var selectTuplesWithFunctions = fn.select(tuple.isValueAFunction);
 
 var selectFunctionTuplesFromObject = fn.compose(selectTuplesWithFunctions, tuple.toTuples);
 
-var curryLeftTupleMethods = tuple.map(tuple.curryMethodLeft);
-var curryRightTupleMethods = tuple.map(tuple.curryMethodRight);
+var curryLeftTupleMethods = fn.map(tuple.curryMethodLeft);
+var curryRightTupleMethods = fn.map(tuple.curryMethodRight);
 
 var curryObjectMethodsLeft =
 		fn.compose(tuple.toObject, curryLeftTupleMethods, selectFunctionTuplesFromObject);

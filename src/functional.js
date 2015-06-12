@@ -73,7 +73,9 @@ var reverse = curry(currylessReverse);
 var identity = curry(currylessIdentity);
 
 var constant = curry(function constant(value) {
-	return value;
+	return function () {
+		return value;
+	};
 });
 
 function noop() {}
@@ -89,7 +91,7 @@ var truthy = curry(function truthy(obj) {
 var falsy = negate(truthy);
 
 
-// Object type helpers
+// *** Type determination ***
 
 var isOfType = curry(function isOfType(type, obj) {
 	return typeof obj === type;
@@ -112,6 +114,38 @@ var isBoolean = isOfType("boolean");
 
 var prop = curry(function (key, obj) {
 	return obj[key];
+});
+
+var fold = curry(function fold(iterator, initial, items) {
+	var memo = initial;
+
+	for(var key in items) {
+		if (items.hasOwnProperty(key)) {
+			memo = iterator(memo, items[key], key);
+		}
+	}
+
+	return memo;
+});
+
+var map = curry(function map(iterator, items) {
+
+	return fold(function (memo, value, key) {
+			var result = iterator(value, key, items);
+			memo.push(result);
+
+			return memo;
+	}, [], items);
+});
+
+var select = curry(function select(iterator, tuples) {
+	return fold(function (selection, tuple) {
+		if (iterator(tuple)) {
+			selection.push(tuple);
+		}
+
+		return selection;
+	}, [], tuples);
 });
 
 var executeMethod = curry(function executeMethod(context, method, args) {
@@ -139,6 +173,7 @@ module.exports = {
 	identity: identity,
 	constant: constant,
 	noop: noop,
+
 	exists: exists,
 	negate: negate,
 	truthy: truthy,
@@ -155,6 +190,10 @@ module.exports = {
 	rest: rest,
 	toArray: toArray,
 	prop: prop,
+
+	fold: fold,
+	map: map,
+	select: select,
 
 	curryRight: curryRight,
 	curry: curry,
