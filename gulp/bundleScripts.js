@@ -32,7 +32,8 @@ function bundleScripts(fileName, sourceDir, outputDir, watch) {
 	var bundler = browserify({
 		cache: {},
 	    packageCache: {},
-		debug: true
+		debug: true,
+		standalone: "curryOnTop",
 	});
 	if (watch) {
 		bundler = watchify(bundler);

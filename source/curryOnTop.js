@@ -26,5 +26,3 @@ var curryOnTop = {
 };
 
 module.exports = curryOnTop;
-
-global.curryOnTop = module.exports;

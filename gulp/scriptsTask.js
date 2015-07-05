@@ -7,6 +7,6 @@ var bundleScripts = require("./bundleScripts");
 
 var taskName = 'scripts';
 
-gulp.task(taskName, _.partial(bundleScripts, "curryOnTop.js", "./src", "./dist", false));
+gulp.task(taskName, _.partial(bundleScripts, "curryOnTop.js", "./source", "./dist", false));
 
 module.exports = taskName;
