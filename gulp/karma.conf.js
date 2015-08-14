@@ -17,8 +17,7 @@ module.exports = function(config) {
 	// list of files / patterns to load in the browser
 	files: [
 		// 'node_modules/browserify/index.js',
-		'dist/**/*.js',
-		'test/**/*Spec.js'
+		'testRun/mainSpec.js'
 		],
 
 

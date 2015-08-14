@@ -7,7 +7,7 @@ var bundleScripts = require("./bundleScripts");
 
 var taskName = 'watchScripts';
 /**
-* Run test once and exit
+* Watch script files and compile them
 */
 gulp.task(taskName, _.partial(bundleScripts, "curryOnTop.js", "./source", "./dist", true));
 

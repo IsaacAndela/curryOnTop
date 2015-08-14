@@ -2,14 +2,16 @@
 "use strict";
 
 var fn = require("./functional");
+var iteration = require("./iteration");
+var methodCurry = require("./methodCurry");
 var tuple = require("./tuple");
 
-var selectTuplesWithFunctions = fn.select(tuple.isValueAFunction);
+var selectTuplesWithFunctions = iteration.select(tuple.isValueAFunction);
 
 var selectFunctionTuplesFromObject = fn.compose(selectTuplesWithFunctions, tuple.toTuples);
 
-var curryLeftTupleMethods = fn.map(tuple.curryMethodLeft);
-var curryRightTupleMethods = fn.map(tuple.curryMethodRight);
+var curryLeftTupleMethods = iteration.map(tuple.curryMethodLeft);
+var curryRightTupleMethods = iteration.map(tuple.curryMethodRight);
 
 var curryObjectMethodsLeft =
 		fn.compose(tuple.toObject, curryLeftTupleMethods, selectFunctionTuplesFromObject);
@@ -21,13 +23,16 @@ var curryObjectMethodsRight =
 // Build the export object
 var curryOnTop = {
 	functional: fn,
-	tuple: tuple,
 	left: curryObjectMethodsLeft,
-	right: curryObjectMethodsRight
+	right: curryObjectMethodsRight,
+	singleLeftWithArity: methodCurry.curryMethodLeftWithArity,
+	singleRightWithArity: methodCurry.curryMethodRightWithArity,
+	singleLeft: methodCurry.curryMethodLeft,
+	singleRight: methodCurry.curryMethodRight
 };
 
 module.exports = curryOnTop;
-},{"./functional":2,"./tuple":3}],2:[function(require,module,exports){
+},{"./functional":2,"./iteration":3,"./methodCurry":4,"./tuple":5}],2:[function(require,module,exports){
 "use strict";
 
 
@@ -45,11 +50,15 @@ function currylessIdentity(arg) {
 	return arg;
 }
 
+function curryLessExists(obj) {
+	return obj != null; // jshint ignore:line
+}
+
 
 // Function that does the actual currying.
 // It can be used for currying left or right.
 var curryExecuteNext = function (processArgs, func, arity, args) {
-	arity = arity || func.length;
+	arity = curryLessExists(arity) ? arity : func.length;
 	if (args.length >= arity) {
 		return func.apply(this, processArgs(args));
 	} else {
@@ -110,9 +119,7 @@ var constant = curry(function constant(value) {
 
 function noop() {}
 
-var exists = curry(function exists(obj) {
-	return obj != null; // jshint ignore:line
-});
+var exists = curry(curryLessExists);
 
 var truthy = curry(function truthy(obj) {
 	return exists(obj) && obj !== false;
@@ -146,58 +153,6 @@ var prop = curry(function (key, obj) {
 	return obj[key];
 });
 
-var fold = curry(function fold(iterator, initial, items) {
-	var memo = initial;
-
-	for(var key in items) {
-		if (items.hasOwnProperty(key)) {
-			memo = iterator(memo, items[key], key);
-		}
-	}
-
-	return memo;
-});
-
-var map = curry(function map(iterator, items) {
-
-	return fold(function (memo, value, key) {
-			var result = iterator(value, key, items);
-			memo.push(result);
-
-			return memo;
-	}, [], items);
-});
-
-var select = curry(function select(iterator, tuples) {
-	return fold(function (selection, tuple) {
-		if (iterator(tuple)) {
-			selection.push(tuple);
-		}
-
-		return selection;
-	}, [], tuples);
-});
-
-var executeMethod = curry(function executeMethod(context, method, args) {
-	return method.apply(context, args);
-});
-
-var curryMethodInDirection = curry(function curryMethodInDirection(processArgs, method) {
-	var arity = method.length + 1;
-
-	var curried = curryRight(function (context) {
-		var args = processArgs(rest(arguments));
-
-		return executeMethod(context, method, args);
-
-	}, arity);
-
-	return curried.apply(null, others(2, arguments));
-});
-
-var curryMethodLeft = curryMethodInDirection(reverse);
-var curryMethodRight = curryMethodInDirection(identity);
-
 module.exports = {
 	reverse: reverse,
 	identity: identity,
@@ -221,23 +176,96 @@ module.exports = {
 	toArray: toArray,
 	prop: prop,
 
-	fold: fold,
-	map: map,
-	select: select,
-
 	curryRight: curryRight,
 	curry: curry,
 
-	compose: compose,
-
-	executeMethod: executeMethod,
-	curryMethodLeft: curryMethodLeft,
-	curryMethodRight: curryMethodRight
+	compose: compose
 };
 },{}],3:[function(require,module,exports){
 "use strict";
 
 var fn = require("./functional");
+
+var fold = fn.curry(function fold(iterator, initial, items) {
+	var memo = initial;
+
+	for(var key in items) {
+		if (items.hasOwnProperty(key)) {
+			memo = iterator(memo, items[key], key);
+		}
+	}
+
+	return memo;
+});
+
+var map = fn.curry(function map(iterator, items) {
+
+	return fold(function (memo, value, key) {
+			var result = iterator(value, key, items);
+			memo.push(result);
+
+			return memo;
+	}, [], items);
+});
+
+var select = fn.curry(function select(iterator, tuples) {
+	return fold(function (selection, tuple) {
+		if (iterator(tuple)) {
+			selection.push(tuple);
+		}
+
+		return selection;
+	}, [], tuples);
+});
+
+module.exports = {
+	fold: fold,
+	map: map,
+	select: select,
+};
+},{"./functional":2}],4:[function(require,module,exports){
+"use strict";
+
+var fn = require("./functional");
+
+var executeMethod = fn.curry(function executeMethod(context, method, args) {
+	return method.apply(context, args);
+});
+
+var curryMethodInDirection = fn.curry(function curryMethodInDirection(processArgs, arity, method) {
+	arity = fn.exists(arity) ? arity : method.length;
+	// Plus 1 because context will be 1 extra argument
+	arity +=1;
+
+	var curried = fn.curryRight(function (context) {
+		var args = processArgs(fn.rest(arguments));
+
+		return executeMethod(context, method, args);
+
+	}, arity);
+
+	return curried.apply(null, fn.others(curryMethodInDirection.length, arguments));
+});
+
+var curryMethodLeftWithArity = curryMethodInDirection(fn.reverse);
+var curryMethodRightWithArity = curryMethodInDirection(fn.identity);
+
+var curryMethodLeft = curryMethodLeftWithArity(undefined);
+var curryMethodRight = curryMethodRightWithArity(undefined);
+
+module.exports = {
+	executeMethod: executeMethod,
+	curryMethodLeftWithArity: curryMethodLeftWithArity,
+	curryMethodRightWithArity: curryMethodRightWithArity,
+	curryMethodLeft: curryMethodLeft,
+	curryMethodRight: curryMethodRight
+};
+},{"./functional":2}],5:[function(require,module,exports){
+"use strict";
+
+var fn = require("./functional");
+var methodCurry = require("./methodCurry");
+var iteration = require("./iteration");
 
 var getKey = fn.prop(0);
 var getValue = fn.prop(1);
@@ -248,14 +276,14 @@ var toTuple = fn.curry(function toTuple(key, value) {
 });
 
 var toTuples = fn.curry(function toTuples(items) {
-	return fn.fold(function (tuples, value, key) {
+	return iteration.fold(function (tuples, value, key) {
 		tuples.push(toTuple(key, value));
 		return tuples;
 	}, [], items);
 });
 
 var toObject = fn.curry(function toObject(tuples) {
-	return fn.fold(function (memo, tuple) {
+	return iteration.fold(function (memo, tuple) {
 		memo[getKey(tuple)] = getValue(tuple);
 		return memo;
 	}, {}, tuples);
@@ -268,8 +296,8 @@ var curryMethodInDirection = fn.curry(function curryMethodInDirection(curryMetho
 	return toTuple(key, method);
 });
 
-var curryMethodLeft = curryMethodInDirection(fn.curryMethodLeft);
-var curryMethodRight = curryMethodInDirection(fn.curryMethodRight);
+var curryMethodLeft = curryMethodInDirection(methodCurry.curryMethodLeft);
+var curryMethodRight = curryMethodInDirection(methodCurry.curryMethodRight);
 
 module.exports = {
 	toTuple: toTuple,
@@ -282,7 +310,7 @@ module.exports = {
 	curryMethodRight: curryMethodRight
 };
 
-},{"./functional":2}]},{},[1])(1)
+},{"./functional":2,"./iteration":3,"./methodCurry":4}]},{},[1])(1)
 });
 
 

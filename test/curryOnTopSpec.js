@@ -1,4 +1,5 @@
 "use strict";
+var curryOnTop = require("../source/curryOnTop");
 
 describe("curryOnTop", function () {
 	describe("curryOnTop.left", function () {
@@ -40,6 +41,36 @@ describe("curryOnTop", function () {
 			expect(curriedObj.obj).toBe(undefined);
 			expect(curriedObj.func1(1)(2, 3)(obj)).toBe("3211");
 			expect(curriedObj.func2("1")("2", obj)).toBe("test21");
+		});
+	});
+
+	describe("single", function () {
+
+
+		var methodCurry = require("../source/methodCurry");
+
+		describe("curryOnTop.singleLeft", function () {
+			it("should be methodCurry.curryMethodLeft", function () {
+				expect(curryOnTop.singleLeft).toBe(methodCurry.curryMethodLeft);
+			});
+		});
+
+		describe("curryOnTop.singleRight", function () {
+			it("should be methodCurry.curryMethodRight", function () {
+				expect(curryOnTop.singleRight).toBe(methodCurry.curryMethodRight);
+			});
+		});
+
+		describe("curryOnTop.singleLeftWithArity", function () {
+			it("should be methodCurry.curryMethodLeftWithArity", function () {
+				expect(curryOnTop.singleLeftWithArity).toBe(methodCurry.curryMethodLeftWithArity);
+			});
+		});
+
+		describe("curryOnTop.singleRightWithArity", function () {
+			it("should be methodCurry.curryMethodRightWithArity", function () {
+				expect(curryOnTop.singleRightWithArity).toBe(methodCurry.curryMethodRightWithArity);
+			});
 		});
 	});
 });

@@ -1,6 +1,5 @@
 {
 	"extends": "../.jshintrc",
 	"node": true,
-	"jasmine": true,
-	"predef": ["curryOnTop"]
+	"jasmine": true
 }

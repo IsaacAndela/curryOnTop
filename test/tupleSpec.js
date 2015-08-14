@@ -1,7 +1,8 @@
 "use strict";
 
+var tuple = require("../source/tuple");
+
 describe("tuple", function () {
-	var tuple = curryOnTop.tuple;
 
 	describe("toTuple", function () {
 		it("should make a tuple", function () {

@@ -15,11 +15,15 @@ function currylessIdentity(arg) {
 	return arg;
 }
 
+function curryLessExists(obj) {
+	return obj != null; // jshint ignore:line
+}
+
 
 // Function that does the actual currying.
 // It can be used for currying left or right.
 var curryExecuteNext = function (processArgs, func, arity, args) {
-	arity = arity || func.length;
+	arity = curryLessExists(arity) ? arity : func.length;
 	if (args.length >= arity) {
 		return func.apply(this, processArgs(args));
 	} else {
@@ -80,9 +84,7 @@ var constant = curry(function constant(value) {
 
 function noop() {}
 
-var exists = curry(function exists(obj) {
-	return obj != null; // jshint ignore:line
-});
+var exists = curry(curryLessExists);
 
 var truthy = curry(function truthy(obj) {
 	return exists(obj) && obj !== false;
@@ -116,58 +118,6 @@ var prop = curry(function (key, obj) {
 	return obj[key];
 });
 
-var fold = curry(function fold(iterator, initial, items) {
-	var memo = initial;
-
-	for(var key in items) {
-		if (items.hasOwnProperty(key)) {
-			memo = iterator(memo, items[key], key);
-		}
-	}
-
-	return memo;
-});
-
-var map = curry(function map(iterator, items) {
-
-	return fold(function (memo, value, key) {
-			var result = iterator(value, key, items);
-			memo.push(result);
-
-			return memo;
-	}, [], items);
-});
-
-var select = curry(function select(iterator, tuples) {
-	return fold(function (selection, tuple) {
-		if (iterator(tuple)) {
-			selection.push(tuple);
-		}
-
-		return selection;
-	}, [], tuples);
-});
-
-var executeMethod = curry(function executeMethod(context, method, args) {
-	return method.apply(context, args);
-});
-
-var curryMethodInDirection = curry(function curryMethodInDirection(processArgs, method) {
-	var arity = method.length + 1;
-
-	var curried = curryRight(function (context) {
-		var args = processArgs(rest(arguments));
-
-		return executeMethod(context, method, args);
-
-	}, arity);
-
-	return curried.apply(null, others(2, arguments));
-});
-
-var curryMethodLeft = curryMethodInDirection(reverse);
-var curryMethodRight = curryMethodInDirection(identity);
-
 module.exports = {
 	reverse: reverse,
 	identity: identity,
@@ -191,16 +141,8 @@ module.exports = {
 	toArray: toArray,
 	prop: prop,
 
-	fold: fold,
-	map: map,
-	select: select,
-
 	curryRight: curryRight,
 	curry: curry,
 
-	compose: compose,
-
-	executeMethod: executeMethod,
-	curryMethodLeft: curryMethodLeft,
-	curryMethodRight: curryMethodRight
+	compose: compose
 };
