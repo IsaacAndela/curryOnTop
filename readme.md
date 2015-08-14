@@ -245,21 +245,21 @@ Multiple functions can be supplied as arguments.
 
 Returns a function that returns the result of invoking each function where each successive invocation is supplied the return value of the previous function.
 
-Note, because the number of arguments are variable, this `compose` is not curried.
+_Note, because the number of arguments are variable, `compose` is not curried._
 
 
 #### `curryOnTop.functional.curry(func, arity: optional)`
 
 Returns a new function that accepts one or more arguments of the original function. When the curried function is called and all of the original function’s arguments are provided, it invokes the original function returning its result. Otherwise the curried function returns a new function that accepts one or more of the remaining original function’s arguments, and so on.
 
-Note, the curry function itself is not curried.
+_Note, the curry function itself is not curried._
 
 
 #### `curryOnTop.functional.curryRight(func, arity: optional)`
 
 Same as `curryOnTop.functional.curry(func, arity)` except arguments are applied right to left to `func`.
 
-Note, the curryRight function itself is not curried.
+_Note, the curryRight function itself is not curried._
 
 
 ### Credits
