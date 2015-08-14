@@ -5,6 +5,11 @@ curryOnTop aims to make functional programming convenient when working with API�
 It does so by taking every method of an object and creating a curried version of these methods that can be used in a functional manner with the instances of said object. Secondarily curryOnTop exposes a number of utility functions for functional programming. Of course all of these are curried.
 
 
+## What is currying?
+
+Currying a function creates a new function that accepts one or more arguments of the original function. When the curried function is called and all of the original function’s arguments are provided, it invokes the original function returning its result. Otherwise the curried function returns a new function that accepts one or more of the remaining original function’s arguments, and so on.[1]
+
+
 ## Use case and examples
 
 Say you are using the following constructor to create list instances:
@@ -48,16 +53,83 @@ Using this technique you can work in a functional style with libraries who by th
 
 ## API documentation
 
-### `curryOnTop.left(object)`
+### Curry methods
 
-...
+#### `curryOnTop.singleLeft(method)`
+
+Returns a function that is the left to right curried version of the method.
+
+The function takes the same arguments as the original function with a context argument added as the last argument.
+
+Example:
+
+	var obj {
+		method: function (arg1, arg2, arg3) { return [this.prop, arg1, arg2, arg3] };
+	};
+	var otherObj = { prop: "otherObjProp" };
+	var curriedFunc = curryOnTop.singleLeft(obj.method);
+
+	// could also be written as curriedFunc(1, 2, 3, otherObj)
+	// or it could be written as curriedFunc(1, 2)(3, otherObj) or curriedFunc(1)(2, 3)(otherObj) etcetera
+	var result = curriedFunc(1)(2)(3)(otherObj);
+	// result is: ["otherObjProp", 1, 2, 3]
+
+#### `curryOnTop.singleLeftWithArity(arity, method)`
+
+Does the same as `curryOnTop.singleLeft(method)` except that the `arity` argument is used to determine the number of arguments `method` has.
 
 
-### `curryOnTop.right(object)`
+Example:
 
-...
+	var obj {
+		method: function (arg1, arg2, arg3) { return [this.prop, arg1, arg2, arg3] };
+	};
+	var otherObj = { prop: "otherObjProp" };
+	var curriedFunc = curryOnTop.singleLeftWithArity(2, obj.method);
+
+	// could also be written as curriedFunc(1, 2, otherObj)
+	// or it could be written as curriedFunc(1, 2)(otherObj) or curriedFunc(1)(2, otherObj) etcetera
+	var result = curriedFunc(1)(2)(otherObj);
+	// result is: ["otherObjProp", 1, 2, undefined]
+	// The last argument is undefined because it is never provided to the method.
+	// The provided arity of 2 causes only the first to arguments to be passed to the method.
+
+
+#### `curryOnTop.left(object)`
+
+Applies `curryOnTop.singleLeft(method)` to all methods belonging to object and returns a new object with these new functions as properties.
+
+
+#### `curryOnTop.singleRight(method)`
+
+Returns a function that is the right to left curried version of the method.
+
+The function takes the same arguments as the original function with a context argument added as the last argument.
+
+Example:
+
+	var obj {
+		method: function (arg1, arg2, arg3) { return [this.prop, arg1, arg2, arg3] };
+	};
+	var otherObj = { prop: "otherObjProp" };
+	var curriedFunc = curryOnTop.singleLeftWithArity(2, obj.method);
+
+	// could also be written as curriedFunc(2, 1, otherObj)
+	// or it could be written as curriedFunc(2, 1)(otherObj) or curriedFunc(2)(1, otherObj) etcetera
+	var result = curriedFunc(2)(1)(otherObj);
+	// result is: ["otherObjProp", 1, 2, undefined]
+	// The last argument is undefined because it is never provided to the method.
+	// The provided arity of 2 causes only the first to arguments to be passed to the method.
+
+
+#### `curryOnTop.right(object)`
+
+Applies `curryOnTop.singleLeft(method)` to all methods belonging to object and returns a new object with these new functions as properties.
 
 
 ### Functional helpers
 
-...
+[...]
+
+
+[1]: This explanation is adapted from the [Lodash documentation](https://lodash.com/docs#curry)
