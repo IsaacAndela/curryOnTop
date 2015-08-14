@@ -7,7 +7,7 @@ It does so by taking every method of an object and creating a curried version of
 
 ## What is currying?
 
-Currying a function creates a new function that accepts one or more arguments of the original function. When the curried function is called and all of the original function’s arguments are provided, it invokes the original function returning its result. Otherwise the curried function returns a new function that accepts one or more of the remaining original function’s arguments, and so on.[1]
+Currying a function creates a new function that accepts one or more arguments of the original function. When the curried function is called and all of the original function’s arguments are provided, it invokes the original function returning its result. Otherwise the curried function returns a new function that accepts one or more of the remaining original function’s arguments, and so on.
 
 
 ## Use case and examples
@@ -79,7 +79,6 @@ Example:
 
 Does the same as `curryOnTop.singleLeft(method)` except that the `arity` argument is used to determine the number of arguments `method` has.
 
-
 Example:
 
 	var obj = {
@@ -146,7 +145,123 @@ Runs `curryOnTop.singleRight(method)` on all methods belonging to object and ret
 
 ### Functional helpers
 
-[...]
+All these functions are curried except for `curryOnTop.functional.curry`, `curryOnTop.functional.curryRight` and `curryOnTop.functional.compose`
 
 
-[1]: This explanation is adapted from the [Lodash documentation](https://lodash.com/docs#curry)
+#### `curryOnTop.functional.reverse(array)`
+
+Returns a new array that is the reverse of array.
+
+
+#### `curryOnTop.functional.identity(value)`
+
+Return the exact value that is provided as an argument.
+
+
+#### `curryOnTop.functional.constant(value)`
+
+Returns a function that always returns `value`;
+
+
+#### `curryOnTop.functional.noop`
+
+A no-operation function that always returns `undefined` regardless of the arguments it receives.
+
+
+#### `curryOnTop.functional.exists(object)`
+
+Returns `false` when object is `undefined` or `null`. Otherwise it returns `true`.
+
+
+#### `curryOnTop.functional.negate(predicate)`
+
+Returns a function that returns the opposite of `predicate`.
+
+
+#### `curryOnTop.functional.truthy(value)`
+
+Returns `false` for a `value` of `null`, `undefined` and `false`, otherwise it returns `true`.
+
+
+#### `curryOnTop.functional.falsy`
+
+Returns `true` for a `value` of `null`, `undefined` and `false`, otherwise it returns `false`.
+
+
+
+#### `curryOnTop.functional.isFunction(object)`
+
+Returns `true` if `object` is a function, otherwise it returns `false`.
+
+
+#### `curryOnTop.functional.isObject(object)`
+
+Returns `true` if `object` is an object, otherwise it returns `false`.
+
+
+#### `curryOnTop.functional.isString(object)`
+
+Returns `true` if `object` is a string, otherwise it returns `false`.
+
+
+#### `curryOnTop.functional.isNumber(object)`
+
+Returns `true` if `object` is a number, otherwise it returns `false`.
+
+
+#### `curryOnTop.functional.isBoolean(object)`
+
+Returns `true` if `object` is a boolean, otherwise it returns `false`.
+
+
+#### `curryOnTop.functional.slice(end, start, array)`
+
+Returns a new array that is a slice of `array` from `start` up to but not including `end`.
+
+
+#### `curryOnTop.functional.others(start, array)`
+
+Returns a new array that is a slice of `array` from `start` till the end of the array.
+
+
+#### `curryOnTop.functional.rest(array)`
+
+Returns a new array that is a `array` without the first property.
+
+
+#### `curryOnTop.functional.toArray(object)`
+
+Coverts array-like objects into arrays.
+
+
+#### `curryOnTop.functional.prop(key, object)`
+
+Returns `object[key]`.
+
+
+#### `curryOnTop.functional.compose(...funcs)`
+
+Multiple functions can be supplied as arguments.
+
+Returns a function that returns the result of invoking each function where each successive invocation is supplied the return value of the previous function.
+
+Note, because the number of arguments are variable, this `compose` is not curried.
+
+
+#### `curryOnTop.functional.curry(func, arity)`
+
+Returns a new function that accepts one or more arguments of the original function. When the curried function is called and all of the original function’s arguments are provided, it invokes the original function returning its result. Otherwise the curried function returns a new function that accepts one or more of the remaining original function’s arguments, and so on.
+
+
+#### `curryOnTop.functional.curryRight(func, arity)`
+
+Same as `curryOnTop.functional.curry(func, arity)` except arguments are applied right to left to `func`.
+
+
+
+
+
+
+### Credits
+
+Functional concepts explanations are largely adapted from the [Lodash documentation](https://lodash.com/docs#curry).

@@ -46,8 +46,8 @@ function currylessReverse(arr) {
 	return currylessSlice(arr).reverse();
 }
 
-function currylessIdentity(arg) {
-	return arg;
+function currylessIdentity(value) {
+	return value;
 }
 
 function curryLessExists(obj) {
@@ -102,9 +102,9 @@ function compose() {
 	};
 }
 
-var negate = curry(function (func) {
+var negate = curry(function (predicate) {
 	return function () {
-		return !func.apply(this, arguments);
+		return !predicate.apply(this, arguments);
 	};
 });
 
@@ -143,8 +143,8 @@ var isObject = curry(function isObject(obj) {
 });
 
 var isString = isOfType("string");
-var isNumber = curry(function (num) {
-	return isOfType("number", num) && !isNaN(num);
+var isNumber = curry(function (obj) {
+	return isOfType("number", obj) && !isNaN(obj);
 });
 
 var isBoolean = isOfType("boolean");
