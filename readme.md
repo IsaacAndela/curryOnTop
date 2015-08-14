@@ -252,14 +252,14 @@ _Note, because the number of arguments are variable, `compose` is not curried._
 
 Returns a new function that accepts one or more arguments of the original function. When the curried function is called and all of the original function’s arguments are provided, it invokes the original function returning its result. Otherwise the curried function returns a new function that accepts one or more of the remaining original function’s arguments, and so on.
 
-_Note, the curry function itself is not curried._
+_Note, the `curry` function itself is not curried._
 
 
 #### `curryOnTop.functional.curryRight(func, arity: optional)`
 
 Same as `curryOnTop.functional.curry(func, arity)` except arguments are applied right to left to `func`.
 
-_Note, the curryRight function itself is not curried._
+_Note, the `curryRight` function itself is not curried._
 
 
 ### Credits
