@@ -248,12 +248,12 @@ Returns a function that returns the result of invoking each function where each 
 Note, because the number of arguments are variable, this `compose` is not curried.
 
 
-#### `curryOnTop.functional.curry(func, arity)`
+#### `curryOnTop.functional.curry(func, arity: optional)`
 
 Returns a new function that accepts one or more arguments of the original function. When the curried function is called and all of the original function’s arguments are provided, it invokes the original function returning its result. Otherwise the curried function returns a new function that accepts one or more of the remaining original function’s arguments, and so on.
 
 
-#### `curryOnTop.functional.curryRight(func, arity)`
+#### `curryOnTop.functional.curryRight(func, arity: optional)`
 
 Same as `curryOnTop.functional.curry(func, arity)` except arguments are applied right to left to `func`.
 
