@@ -64,7 +64,7 @@ The function takes the same arguments as the original function with a context ar
 Example:
 
 	var obj = {
-		method: function (arg1, arg2, arg3) { return [this.prop, arg1, arg2, arg3] };
+		method: function (arg1, arg2, arg3) { return [this.prop, arg1, arg2, arg3] }
 	};
 	var otherObj = { prop: "otherObjProp" };
 	var curriedFunc = curryOnTop.singleLeft(obj.method);
@@ -83,7 +83,7 @@ Does the same as `curryOnTop.singleLeft(method)` except that the `arity` argumen
 Example:
 
 	var obj = {
-		method: function (arg1, arg2, arg3) { return [this.prop, arg1, arg2, arg3] };
+		method: function (arg1, arg2, arg3) { return [this.prop, arg1, arg2, arg3] }
 	};
 	var otherObj = { prop: "otherObjProp" };
 	var curriedFunc = curryOnTop.singleLeftWithArity(2, obj.method);
@@ -98,7 +98,7 @@ Example:
 
 #### `curryOnTop.left(object)`
 
-Applies `curryOnTop.singleLeft(method)` to all methods belonging to object and returns a new object with these new functions as properties.
+Runs `curryOnTop.singleLeft(method)` on all methods belonging to object and returns a new object with these new functions as properties.
 
 
 #### `curryOnTop.singleRight(method)`
@@ -108,7 +108,7 @@ Returns a function that is the right to left curried version of the method.
 The function takes the same arguments as the original function with a context argument added as the last argument.
 
 	var obj = {
-		method: function (arg1, arg2, arg3) { return [this.prop, arg1, arg2, arg3] };
+		method: function (arg1, arg2, arg3) { return [this.prop, arg1, arg2, arg3] }
 	};
 	var otherObj = { prop: "otherObjProp" };
 	var curriedFunc = curryOnTop.singleRight(obj.method);
@@ -126,7 +126,7 @@ Does the same as `curryOnTop.singleRight(method)` except that the `arity` argume
 Example:
 
 	var obj = {
-		method: function (arg1, arg2, arg3) { return [this.prop, arg1, arg2, arg3] };
+		method: function (arg1, arg2, arg3) { return [this.prop, arg1, arg2, arg3] }
 	};
 	var otherObj = { prop: "otherObjProp" };
 	var curriedFunc = curryOnTop.singleRightWithArity(2, obj.method);
@@ -141,7 +141,7 @@ Example:
 
 #### `curryOnTop.right(object)`
 
-Applies `curryOnTop.singleLeft(method)` to all methods belonging to object and returns a new object with these new functions as properties.
+Runs `curryOnTop.singleLeft(method)` on all methods belonging to object and returns a new object with these new functions as properties.
 
 
 ### Functional helpers
