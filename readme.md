@@ -63,7 +63,7 @@ The function takes the same arguments as the original function with a context ar
 
 Example:
 
-	var obj {
+	var obj = {
 		method: function (arg1, arg2, arg3) { return [this.prop, arg1, arg2, arg3] };
 	};
 	var otherObj = { prop: "otherObjProp" };
@@ -74,6 +74,7 @@ Example:
 	var result = curriedFunc(1)(2)(3)(otherObj);
 	// result is: ["otherObjProp", 1, 2, 3]
 
+
 #### `curryOnTop.singleLeftWithArity(arity, method)`
 
 Does the same as `curryOnTop.singleLeft(method)` except that the `arity` argument is used to determine the number of arguments `method` has.
@@ -81,7 +82,7 @@ Does the same as `curryOnTop.singleLeft(method)` except that the `arity` argumen
 
 Example:
 
-	var obj {
+	var obj = {
 		method: function (arg1, arg2, arg3) { return [this.prop, arg1, arg2, arg3] };
 	};
 	var otherObj = { prop: "otherObjProp" };
@@ -106,13 +107,29 @@ Returns a function that is the right to left curried version of the method.
 
 The function takes the same arguments as the original function with a context argument added as the last argument.
 
-Example:
-
-	var obj {
+	var obj = {
 		method: function (arg1, arg2, arg3) { return [this.prop, arg1, arg2, arg3] };
 	};
 	var otherObj = { prop: "otherObjProp" };
-	var curriedFunc = curryOnTop.singleLeftWithArity(2, obj.method);
+	var curriedFunc = curryOnTop.singleRight(obj.method);
+
+	// could also be written as curriedFunc(3, 2, 1, otherObj)
+	// or it could be written as curriedFunc(3, 2)(1, otherObj) or curriedFunc(3)(2, 1)(otherObj) etcetera
+	var result = curriedFunc(3)(2)(1)(otherObj);
+	// result is: ["otherObjProp", 1, 2, 3]
+
+
+#### `curryOnTop.singleRightWithArity(arity, method)`
+
+Does the same as `curryOnTop.singleRight(method)` except that the `arity` argument is used to determine the number of arguments `method` has.
+
+Example:
+
+	var obj = {
+		method: function (arg1, arg2, arg3) { return [this.prop, arg1, arg2, arg3] };
+	};
+	var otherObj = { prop: "otherObjProp" };
+	var curriedFunc = curryOnTop.singleRightWithArity(2, obj.method);
 
 	// could also be written as curriedFunc(2, 1, otherObj)
 	// or it could be written as curriedFunc(2, 1)(otherObj) or curriedFunc(2)(1, otherObj) etcetera
