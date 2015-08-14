@@ -13,6 +13,12 @@
     "url": "https://github.com/IsaacAndela/curryOnTop/issues",
     "email": "mail@isaacandela.nl"
   },
+  "keywords": [
+    "functional",
+    "curry",
+    "utility",
+    "library"
+  ],
   "repository": "IsaacAndela/curryOnTop",
   "author": "Isaac Andela <mail@isaacandela.nl>",
   "license": "ISC",

@@ -265,3 +265,8 @@ _Note, the `curryRight` function itself is not curried._
 ### Credits
 
 Functional concepts explanations are largely adapted from the [Lodash documentation](https://lodash.com/docs#curry).
+
+
+## License
+
+CurryOnTop is licensed under the ISC license. See [the license file](LICENSE) for details.
