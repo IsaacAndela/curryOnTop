@@ -98,7 +98,7 @@ Example:
 
 #### `curryOnTop.left(object)`
 
-Runs `curryOnTop.singleLeft(method)` on all methods belonging to object and returns a new object with these new functions as properties.
+Runs `curryOnTop.singleLeft(method)` on all methods belonging to object and returns a new object with these newly curried functions as properties.
 
 
 #### `curryOnTop.singleRight(method)`
@@ -141,7 +141,7 @@ Example:
 
 #### `curryOnTop.right(object)`
 
-Runs `curryOnTop.singleLeft(method)` on all methods belonging to object and returns a new object with these new functions as properties.
+Runs `curryOnTop.singleLeft(method)` on all methods belonging to object and returns a new object with these newly curried functions as properties.
 
 
 ### Functional helpers
