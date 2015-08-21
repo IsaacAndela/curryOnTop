@@ -1,9 +1,9 @@
 {
-  "name": "curryOnTop",
+  "name": "curry-on-top",
   "version": "0.1.2",
   "description": "Makes functional programming and currying convenient when working with API’s that rely on objects and methods",
   "main": "./src/curryOnTop.js",
-  "browser": "./dist/curryOnTop.js",
+  "browser": "./dist/curryOnTop.min.js",
   "scripts": {
     "test": "gulp test",
     "build": "gulp scripts",
@@ -28,6 +28,9 @@
     "gulp": "^3.8.10",
     "gulp-livereload": "^3.7.0",
     "gulp-plumber": "^0.6.6",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.3",
     "http": "0.0.0",
     "jasmine-core": "^2.2.0",
