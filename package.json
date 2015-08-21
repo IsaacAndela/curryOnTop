@@ -1,6 +1,6 @@
 {
   "name": "curry-on-top",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Makes functional programming and currying convenient when working with API’s that rely on objects and methods",
   "main": "./dist/curryOnTop.js",
   "browser": "./dist/curryOnTop.min.js",
