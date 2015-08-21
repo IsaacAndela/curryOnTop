@@ -2,13 +2,21 @@
   "name": "curry-on-top",
   "version": "0.1.2",
   "description": "Makes functional programming and currying convenient when working with API’s that rely on objects and methods",
-  "main": "./src/curryOnTop.js",
+  "main": "./dist/curryOnTop.js",
   "browser": "./dist/curryOnTop.min.js",
   "scripts": {
     "test": "gulp test",
     "build": "gulp scripts",
     "start": "gulp watch"
   },
+  "files": [
+    "dist/curryOnTop.js",
+    "dist/curryOnTop.js.map",
+    "dist/curryOnTop.min.js",
+    "dist/curryOnTop.min.js.map",
+    "LICENCE",
+    "readme.md"
+  ],
   "bugs": {
     "url": "https://github.com/IsaacAndela/curryOnTop/issues",
     "email": "mail@isaacandela.nl"
